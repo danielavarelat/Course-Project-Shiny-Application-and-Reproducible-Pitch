@@ -1,0 +1,55 @@
+Course Project: Shiny Application and Reproducible Pitch
+========================================================
+author: Daniela Varela T
+date: 20/03/2021
+autosize: true
+
+About the Assignment
+========================================================
+
+This is the final project for the *Developing data products* course as part of
+the Coursera Data science specialization. 
+
+The project is divided in tqo parts: the application and the presentation. 
+The shiny application must be deployed in on Rstudio's shiny server, and the presentation must be pushed to github or Rpubs.
+
+
+App functionality
+========================================================
+
+The purpose of is to show how you can create different kind of plots according to the input variable. The dataset for this implementation was mtcars, which comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles.
+
+```{r}
+summary(mtcars)
+```
+
+How to use the application
+========================================================
+
+The dependant variable (Y) is MPG always, you have to choose the independant variable (X) you want to explore. A plot will be shown according to the variable selected and it could be a scatter plot with a linear model fit or a box plot, depending on the choice. 
+
+For example, if you choose the variable displacement, as it is continuous, the plot will be a scatter plot with the lm model. 
+
+```{r, echo=TRUE}
+library(ggplot2)
+
+ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point() + 
+                xlab("disp") + ylab('mpg') + geom_smooth(method='lm')
+```
+
+...
+========================================================
+But if it is a categorical variable such as the number of cylinders, it will be a boxplot.  
+
+```{r, echo=TRUE}
+mtcars$cyl <- as.factor(mtcars$cyl)
+ggplot(mtcars,aes(x=cyl, y=mpg))  + geom_boxplot() + xlab("cyl") + ylab('mpg')
+
+```
+Code structure
+========================================================
+- iu.R: contains helpText components and a set of radio buttons with the variables of the dataset as options. The main panel is composed only by a single plotOutput. 
+
+- server.R: there is a reactive expression with an if statement to decide which type of plot to show depending on the input from the radio button. 
+
+
